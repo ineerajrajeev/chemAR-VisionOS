@@ -3,53 +3,50 @@
 //  chemAR VisionOS
 //
 //  Created by Neeraj Shetkar on 10/12/23.
-//
 
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import TipKit
 
 struct ContentView: View {
-
-    @State private var showImmersiveSpace = false
-    @State private var immersiveSpaceIsShown = false
-
-    @Environment(\.openImmersiveSpace) var openImmersiveSpace
-    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
-
-    var body: some View {
-        VStack {
-            Model3D(named: "Scene", bundle: realityKitContentBundle)
-                .padding(.bottom, 50)
-
-            Text("Hello, world!")
-
-            Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
-                .toggleStyle(.button)
-                .padding(.top, 50)
+    
+    struct ElementTip: Tip {
+        let info: ElementInfo
+        var title: Text {
+            Text("What is \(info.name) ?")
         }
-        .padding()
-        .onChange(of: showImmersiveSpace) { _, newValue in
-            Task {
-                if newValue {
-                    switch await openImmersiveSpace(id: "ImmersiveSpace") {
-                    case .opened:
-                        immersiveSpaceIsShown = true
-                    case .error, .userCancelled:
-                        fallthrough
-                    @unknown default:
-                        immersiveSpaceIsShown = false
-                        showImmersiveSpace = false
+        var message: Text? {
+            Text("You can get to know new elements everytime you open an app")
+        }
+        var image: Image? {
+            Image(systemName: "atom")
+        }
+    }
+    
+    var body: some View {
+        ZStack {
+            NavigationStack {
+                VStack {
+                    TabView {
+                        VStack {
+                            HomeView()
+                        }
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+                        BlockView()
+                            .tabItem {
+                                Label("Directory", systemImage: "book.pages")
+                            }
                     }
-                } else if immersiveSpaceIsShown {
-                    await dismissImmersiveSpace()
-                    immersiveSpaceIsShown = false
                 }
             }
         }
+        .padding()
     }
 }
 
-#Preview(windowStyle: .automatic) {
+#Preview {
     ContentView()
 }

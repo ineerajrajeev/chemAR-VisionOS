@@ -13,9 +13,6 @@ struct chemAR_VisionOSApp: App {
         WindowGroup {
             ContentView()
         }
-
-        ImmersiveSpace(id: "ImmersiveSpace") {
-            ImmersiveView()
-        }.immersionStyle(selection: .constant(.full), in: .full)
+        .windowStyle(.plain)
     }
 }
