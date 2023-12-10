@@ -15,18 +15,23 @@ struct Details: View {
     var body: some View {
         ZStack {
             HStack {
+                // Atom shells, electrons animation
                 VStack {
                     Atom(info: info)
                 }
                     .frame(width: 450, height: 450)
                     .glassBackgroundEffect()
                 Spacer()
+                
                 VStack {
+                    // Title
                     HStack {
                         Text(info.name)
                             .font(.title)
                             .fontWeight(.bold)
                         Spacer()
+                        
+                        // Link to AR View
                         NavigationLink(
                             destination: ARViewContainer(info: info),
                             label: {
@@ -36,8 +41,12 @@ struct Details: View {
                         )
                     }
                     Spacer()
+                    
+                    // Description
                     Text("\(info.description)")
                         .padding()
+                    
+                    // Electron 
                     Text("Electronic Configuration")
                         .fontWeight(.bold)
                     Text(info.electron_configuration_semantic)

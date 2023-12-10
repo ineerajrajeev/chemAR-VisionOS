@@ -38,6 +38,28 @@ struct QuizQuestions: View {
     var body: some View {
         ZStack {
             VStack {
+                if showMessage {
+                    VStack {
+                        Text(ans ? "\(successMessages.randomElement()!)": "\(failureMessages.randomElement()!)")
+                            .foregroundStyle(ans ? Color.green : Color.red)
+                    }
+                    .font(.title2)
+                    .padding()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showMessage = false
+                            }
+                        }
+                    }
+                } else {
+                    // When not to show messages
+                    Text(" ")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(ans ? Color.green : Color.red)
+                        .padding()
+                }
                 VStack {
                     Text("Quiz")
                         .font(.title)
@@ -78,13 +100,14 @@ struct QuizQuestions: View {
                 // Show Card
                 if showMessage {
                     VStack {
-                        Text(ans ? "\(successMessages.randomElement()!)": "\(failureMessages.randomElement()!)")
-                            .foregroundStyle(ans ? Color.green : Color.red)
                         if (ans) {
                             VStack {
-                                Text(cardData.name)
+                                Text("\(cardData.name) (\(cardData.number))")
                                     .font(.title)
                                     .fontWeight(.bold)
+                                itemDetails(param1: "Phase", val1: cardData.phase,
+                                            param2: "Shells", val2: String(cardData.shells.count))
+                                    .padding()
                                 itemDetails(param1: "Atomic Weight", val1: String(format: "%.3f", cardData.atomicWeight),
                                             param2: "Density", val2: cardData.density != nil ? String(format: "%.3f", cardData.density!) : "Not Available")
                                     .padding()
@@ -94,11 +117,9 @@ struct QuizQuestions: View {
                             }
                             .padding()
                             .glassBackgroundEffect()
-                            .frame(maxWidth: .infinity)
                         }
                     }
                     .font(.title2)
-                    .fontWeight(.bold)
                     .padding()
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -115,7 +136,6 @@ struct QuizQuestions: View {
                         .foregroundStyle(ans ? Color.green : Color.red)
                         .padding()
                 }
-
             }
             .padding()
         }

@@ -16,23 +16,23 @@ struct HomeView: View {
         GeometryReader { geometry in
             ZStack {
                 HStack(spacing: 0) {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 20) {
-                            HStack {
-                                Text(info.name)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                NavigationLink(
-                                    destination: ARViewContainer(info: info),
-                                    label: {
-                                        Label("AR View", systemImage: "rotate.3d.fill")
-                                            .frame(width: 150, height: 50)
-                                            .clipShape(Capsule())
-                                    }
-                                )
-                            }
+                    VStack(alignment: .leading, spacing: 20) {
+                        HStack {
+                            Text(info.name)
+                                .font(.title)
+                                .fontWeight(.bold)
                             Spacer()
+                            NavigationLink(
+                                destination: ARViewContainer(info: info),
+                                label: {
+                                    Label("AR View", systemImage: "rotate.3d.fill")
+                                        .frame(width: 150, height: 50)
+                                        .clipShape(Capsule())
+                                }
+                            )
+                        }
+                        Spacer()
+                        ScrollView {
                             HStack {
                                 Spacer()
                                 Atom(info: info)
@@ -41,7 +41,7 @@ struct HomeView: View {
                                 Spacer()
                             }
                             Spacer()
-                            Text("\(info.description)")
+                            Text("\(info.description)\n")
                             Text("Electronic Configuration")
                                 .fontWeight(.bold)
                             Text(info.electron_configuration_semantic)
@@ -50,9 +50,10 @@ struct HomeView: View {
                             itemDetails(param1: "Period", val1: "\(info.period)",
                                         param2: "Block", val2: "\(info.block)")
                         }
+                        }
                         .padding()
+                        .font(.title2)
                         .frame(width: geometry.size.width * 0.5)
-                    }
                     VStack {
                         QuizQuestions()
                     }

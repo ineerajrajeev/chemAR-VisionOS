@@ -15,17 +15,21 @@ struct itemDetails: View {
     let val2: String
     
     var body: some View {
-        HStack {
-            Text(param1)
-                .fontWeight(.bold)
-            Spacer()
-            Text(param2)
-                .fontWeight(.bold)
-        }
-        HStack {
-            Text(val1)
-            Spacer()
-            Text(val2)
+        VStack {
+            HStack {
+                Text(param1)
+                    .fontWeight(.bold)
+                    .font(.title2)
+                Spacer()
+                Text(param2)
+                    .fontWeight(.bold)
+                    .font(.title2)
+            }
+            HStack {
+                Text(val1)
+                Spacer()
+                Text(val2)
+            }
         }
     }
 }

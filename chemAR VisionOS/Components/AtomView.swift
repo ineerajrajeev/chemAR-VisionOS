@@ -11,6 +11,7 @@ struct Atom: View {
         LazyVStack {
             GeometryReader { geometry in
                 ZStack {
+                    // Nucleus
                     Circle()
                         .fill(Color.blue)
                         .frame(width: 10, height: 10)
@@ -63,10 +64,12 @@ struct Atom: View {
         }
     }
     
+    // Rotation angle
     private func setupRotations() {
         electronRotations = Array(repeating: 0.0, count: info.shells.count)
     }
     
+    // Text position
     private func getTextPosition(for index: Int, in size: CGSize, radius: CGFloat) -> CGPoint {
             let angle = 360.0 / Double(info.shells.count) * Double(index)
             let xPos = cos(angle * .pi / 180) * Double(radius) + Double(size.width / 2)
