@@ -10,6 +10,12 @@ import SwiftUI
 struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var showImmersiveSpace = false
+    @State private var immersiveSpaceIsShown = false
+
+    @Environment(\.openImmersiveSpace) var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+    
     let info = getRandomElement(from: elements)!
     
     var body: some View {
@@ -22,34 +28,50 @@ struct HomeView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                             Spacer()
-                            NavigationLink(
-                                destination: ARViewContainer(info: info),
-                                label: {
-                                    Label("AR View", systemImage: "rotate.3d.fill")
-                                        .frame(width: 150, height: 50)
-                                        .clipShape(Capsule())
+                            Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
+                                .toggleStyle(.button)
+                        }
+                        .onChange(of: showImmersiveSpace) { _, newValue in
+                            Task {
+                                if newValue {
+                                    switch await openImmersiveSpace(id: "ImmersiveSpace") {
+                                    case .opened:
+                                        immersiveSpaceIsShown = true
+                                    case .error, .userCancelled:
+                                        fallthrough
+                                    @unknown default:
+                                        immersiveSpaceIsShown = false
+                                        showImmersiveSpace = false
+                                    }
+                                } else if immersiveSpaceIsShown {
+                                    await dismissImmersiveSpace()
+                                    immersiveSpaceIsShown = false
                                 }
-                            )
+                            }
                         }
                         Spacer()
                         ScrollView {
-                            HStack {
+                                HStack {
+                                    Spacer()
+                                    Atom(info: info)
+                                        .padding()
+                                        .frame(width: 450, height: 450)
+                                        .glassBackgroundEffect()
+                                    Spacer()
+                                }
                                 Spacer()
-                                Atom(info: info)
-                                    .frame(width: 450, height: 450)
-                                    .glassBackgroundEffect()
-                                Spacer()
+                                VStack {
+                                    Text("\(info.description)\n")
+                                    Text("Electronic Configuration")
+                                        .fontWeight(.bold)
+                                    Text(info.electron_configuration_semantic)
+                                    itemDetails(param1: "Atomic Weight", val1: String(format: "%.3f", info.atomicWeight),
+                                                param2: "Density", val2: info.density != nil ? String(format: "%.3f", info.density!) : "Not Available")
+                                    itemDetails(param1: "Period", val1: "\(info.period)",
+                                                param2: "Block", val2: "\(info.block)")
+                                }
+                                .padding()
                             }
-                            Spacer()
-                            Text("\(info.description)\n")
-                            Text("Electronic Configuration")
-                                .fontWeight(.bold)
-                            Text(info.electron_configuration_semantic)
-                            itemDetails(param1: "Atomic Weight", val1: String(format: "%.3f", info.atomicWeight),
-                                        param2: "Density", val2: info.density != nil ? String(format: "%.3f", info.density!) : "Not Available")
-                            itemDetails(param1: "Period", val1: "\(info.period)",
-                                        param2: "Block", val2: "\(info.block)")
-                        }
                         }
                         .padding()
                         .font(.title2)

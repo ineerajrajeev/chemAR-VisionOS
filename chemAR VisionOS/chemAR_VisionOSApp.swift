@@ -14,5 +14,9 @@ struct chemAR_VisionOSApp: App {
             ContentView()
         }
         .windowStyle(.plain)
+        
+        ImmersiveSpace(id: "ImmersiveSpace") {
+            ARViewContainer(info: mockData)
+        }
     }
 }

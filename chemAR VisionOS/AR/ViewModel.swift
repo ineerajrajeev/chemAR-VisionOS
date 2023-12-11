@@ -7,15 +7,7 @@
 
 import Foundation
 
-@Observable
-class ViewModel
-{
-    var navigationPath : [ElementInfo] = []
-    var isShowingRocketCapsule : Bool = false
-    var isShowingFullRocket : Bool = false
-    var isShowingMixedRocket : Bool = false
-    
-    var capsuleRealityAreaId: String = "CapsuleRealityArea"
-    var fullRocketRealityArea: String = "FullRocketRealityArea"
-    var mixedRocketRealityArea: String = "MixedRocketRealityArea"
+
+class ViewModel: ObservableObject {
+    var modelStatus: Bool = true
 }
