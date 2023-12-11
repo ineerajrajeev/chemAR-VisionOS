@@ -28,7 +28,7 @@ struct HomeView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                             Spacer()
-                            Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
+                            Toggle("AR View", isOn: $showImmersiveSpace)
                                 .toggleStyle(.button)
                         }
                         .onChange(of: showImmersiveSpace) { _, newValue in
