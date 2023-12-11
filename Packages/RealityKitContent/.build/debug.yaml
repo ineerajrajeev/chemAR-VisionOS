@@ -1,0 +1,42 @@
+client:
+  name: basic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "RealityKitContent-debug.module": ["<RealityKitContent-debug.module>"]
+  "main": ["<RealityKitContent-debug.module>"]
+  "test": ["<RealityKitContent-debug.module>"]
+default: "main"
+nodes:
+  "/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Sources/RealityKitContent/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "<RealityKitContent-debug.module>":
+    tool: phony
+    inputs: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.build/RealityKitContent.swift.o","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.swiftmodule"]
+    outputs: ["<RealityKitContent-debug.module>"]
+
+  "C.RealityKitContent-debug.module":
+    tool: swift-compiler
+    inputs: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Sources/RealityKitContent/RealityKitContent.swift"]
+    outputs: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.build/RealityKitContent.swift.o","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.swiftmodule"]
+    executable: "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    module-name: "RealityKitContent"
+    module-output-path: "/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.swiftmodule"
+    import-paths: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug"]
+    temps-path: "/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.build"
+    objects: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.build/RealityKitContent.swift.o"]
+    other-args: ["-target","arm64-apple-macosx10.13","-swift-version","5","-enable-batch-mode","-index-store-path","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-g","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/.build/arm64-apple-macosx/debug/RealityKitContent.build/RealityKitContent-Swift.h","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-package-name","realitykitcontent"]
+    sources: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Sources/RealityKitContent/RealityKitContent.swift"]
+    is-library: true
+    enable-whole-module-optimization: false
+    num-threads: 8
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Sources/RealityKitContent/","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Package.swift","/Users/neerajshetkar/Desktop/chemAR VisionOS/Packages/RealityKitContent/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

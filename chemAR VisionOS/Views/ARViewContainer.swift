@@ -18,7 +18,7 @@ struct ARViewContainer: View {
     var info: ElementInfo
     var body: some View {
         RealityView { content in
-            if let scene = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
+            if let scene = try? await Entity(named: "ElectronComponent", in: realityKitContentBundle) {
                 content.add(scene)
             }
         }
