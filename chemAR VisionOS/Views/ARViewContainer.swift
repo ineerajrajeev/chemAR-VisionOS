@@ -1,34 +1,59 @@
-//
-//  ImmersiveView.swift
-//  chemAR
-//
-//  Created by Neeraj Shetkar on 11/12/23.
-//
-
 import SwiftUI
 import RealityKit
 import RealityKitContent
 
 struct ARViewContainer: View {
     @State private var electronRotations: [Double] = []
-    @Environment(\.colorScheme) var colorScheme
     let animationTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    
+
     var info: ElementInfo
-    
+
     var body: some View {
         RealityView { content in
-            if let electron = try? await Entity(named: "Electron", in: realityKitContentBundle), let nucleus = try? await Entity(named: "Nucleus", in: realityKitContentBundle) {
+            if let nucleus = try? await Entity(named: "Nucleus", in: realityKitContentBundle) {
                 content.add(nucleus)
-                content.add(electron)
-                electron.scale = [0.2, 0.2, 0.2]
-                nucleus.scale = [0.2, 0.2, 0.2]
-                electron.position = [0.1, 0, 0]
+                nucleus.position = [0, 0, 0]
+                nucleus.scale = [0.25, 0.25, 0.25]
+
+                for (shellIndex, electronCount) in info.shells.enumerated() {
+                    let electronRadius = CGFloat(shellIndex + 1) * 0.1
+                    
+                    
+                    for i in 0..<electronCount {
+                        let angle = 360.0 / Double(electronCount) * Double(i)
+                        let electron = try? await Entity(named: "Electron", in: realityKitContentBundle)
+                        let x = electronRadius * cos(angle * .pi / 180)
+                        let z = electronRadius * sin(angle * .pi / 180)
+
+                        if let electronEntity = electron {
+                            content.add(electronEntity)
+                            electronEntity.position = [Float(x), 0, Float(z)] // Adjust as needed
+                            electronEntity.scale = [0.1, 0.1, 0.1]
+                            electronRotations.append(0.0)
+                        }
+                    }
+                }
             }
+        }
+        .onAppear {
+            setupRotations()
+        }
+        .onReceive(animationTimer) { _ in
+            animateRotations()
+        }
+    }
+
+    private func setupRotations() {
+        electronRotations = Array(repeating: 0.0, count: info.shells.reduce(0, +))
+    }
+
+    private func animateRotations() {
+        for i in 0..<electronRotations.count {
+            electronRotations[i] += 2.0 // Adjust the rotation speed here
+            // Update the rotation or transform of each electron entity here based on 'electronRotations[i]'
         }
     }
 }
-
 
 #Preview {
     ARViewContainer(info: mockData)

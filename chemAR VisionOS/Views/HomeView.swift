@@ -11,6 +11,9 @@ struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @Environment(\.openWindow) var openWindow
+    @Environment(\.dismissWindow) var dismissWindow
+    
+    @State private var showWindow: Bool = false
     
     @State private var showImmersiveSpace = false
     @State private var immersiveSpaceIsShown = false
@@ -31,7 +34,14 @@ struct HomeView: View {
                                 .fontWeight(.bold)
                             Spacer()
                             Button("AR View", action: {
-                                openWindow(id: "AR_View")
+                                if !showWindow {
+                                    openWindow(id: "AR_View")
+                                    showWindow = true
+                                } else {
+                                    dismissWindow(id: "AR_View")
+                                    showWindow = false
+                                }
+                                
                             })
                         }
                         Spacer()
