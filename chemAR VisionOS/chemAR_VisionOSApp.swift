@@ -15,8 +15,10 @@ struct chemAR_VisionOSApp: App {
         }
         .windowStyle(.plain)
         
-        ImmersiveSpace(id: "ImmersiveSpace") {
+        WindowGroup(id: "AR_View") {
             ARViewContainer(info: mockData)
         }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 300, height: 100, depth: 500)
     }
 }

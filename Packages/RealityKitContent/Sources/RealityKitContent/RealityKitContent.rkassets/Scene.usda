@@ -7,52 +7,145 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["GridMaterial", "Sphere"]
+    reorder nameChildren = ["GridMaterial", "Nucleus", "Nucleus", "ScratchedMetallicPaint"]
     rel material:binding = None (
         bindMaterialAs = "weakerThanDescendants"
     )
 
-    def Sphere "Sphere" (
+    def "GridMaterial" (
+        active = true
+        references = @Materials/GridMaterial.usda@
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Sphere "Nucleus" (
         active = true
         prepend apiSchemas = ["MaterialBindingAPI"]
     )
     {
-        rel material:binding = </Root/GridMaterial/GridMaterial> (
+        reorder nameChildren = ["DefaultMaterial", "ScratchedMetallicPaint"]
+        rel material:binding = </Root/Nucleus/ScratchedMetallicPaint> (
             bindMaterialAs = "weakerThanDescendants"
         )
-        double radius = 0.05
+        double radius = 0.1
         quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 0, 0.0004)
+        float3 xformOp:scale = (0.25, 0.25, 0.25)
+        float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
-        def RealityKitComponent "Collider"
+        def Material "DefaultMaterial"
         {
-            uint group = 1
-            uniform token info:id = "RealityKit.Collider"
-            uint mask = 4294967295
-            token type = "Default"
+            token outputs:mtlx:surface
+            token outputs:realitykit:vertex
+            prepend token outputs:surface.connect = </Root/Nucleus/DefaultMaterial/DefaultSurfaceShader.outputs:surface>
+            float2 ui:nodegraph:realitykit:subgraphOutputs:pos = (0, 109.5)
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
 
-            def RealityKitStruct "Shape"
+            def Shader "DefaultSurfaceShader"
             {
-                float3 extent = (0.2, 0.2, 0.2)
-                float radius = 0.05
-                token shapeType = "Sphere"
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:roughness = 0.75
+                token outputs:surface
             }
         }
 
-        def RealityKitComponent "InputTarget"
+        def "ScratchedMetallicPaint" (
+            active = true
+            prepend references = @ScratchedMetallicPaint.usdz@
+        )
         {
-            uniform token info:id = "RealityKit.InputTarget"
+            color3f inputs:Basecolor_Tint (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-56.812614, 67.17455)
+                        float2 sizeInSubgraph = (160.5, 53)
+                        int stackingOrderInSubgraph = 2344
+                    }
+                }
+            )
+            float2 inputs:UV_Scale (
+                customData = {
+                    dictionary realitykit = {
+                        float2 positionInSubgraph = (-725.2588, 351.55255)
+                        float2 sizeInSubgraph = (138.5, 53)
+                        int stackingOrderInSubgraph = 2272
+                    }
+                }
+            )
+            float2 ui:nodegraph:realitykit:subgraphOutputs:size = (181.5, 99)
+
+            over "Dot"
+            {
+                float2 ui:nodegraph:node:size = (44, 18)
+            }
+
+            over "multiply"
+            {
+                float2 ui:nodegraph:node:size = (60, 36)
+            }
+
+            over "add"
+            {
+                float2 ui:nodegraph:node:size = (61.5, 36.5)
+            }
+
+            over "PreviewSurface"
+            {
+                float2 ui:nodegraph:node:size = (148.5, 199)
+            }
+
+            over "Mix"
+            {
+                float2 ui:nodegraph:node:size = (109, 145)
+            }
+
+            over "Swizzle"
+            {
+                float2 ui:nodegraph:node:size = (133.5, 40)
+            }
+
+            over "Swizzle_1"
+            {
+                float2 ui:nodegraph:node:size = (145.5, 53)
+            }
+
+            over "Multiply_1"
+            {
+                float2 ui:nodegraph:node:size = (60, 36)
+            }
+
+            over "BaseColor"
+            {
+                float2 ui:nodegraph:node:size = (158.5, 235)
+            }
+
+            over "Roughness"
+            {
+                float2 ui:nodegraph:node:size = (158.5, 235)
+            }
+
+            over "Metallic"
+            {
+                float2 ui:nodegraph:node:size = (158.5, 235)
+            }
+
+            over "Normal"
+            {
+                float2 ui:nodegraph:node:size = (158.5, 235)
+            }
         }
     }
 
-    def "GridMaterial" (
+    def "Electron" (
         active = true
-        prepend references = @Materials/GridMaterial.usda@
+        prepend references = @Electron.usdz@
     )
     {
-        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:scale = (0.25, 0.25, 0.25)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }

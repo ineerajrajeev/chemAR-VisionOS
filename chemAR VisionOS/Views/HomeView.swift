@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @Environment(\.colorScheme) var colorScheme
     
+    @Environment(\.openWindow) var openWindow
+    
     @State private var showImmersiveSpace = false
     @State private var immersiveSpaceIsShown = false
 
@@ -28,26 +30,9 @@ struct HomeView: View {
                                 .font(.title)
                                 .fontWeight(.bold)
                             Spacer()
-                            Toggle("AR View", isOn: $showImmersiveSpace)
-                                .toggleStyle(.button)
-                        }
-                        .onChange(of: showImmersiveSpace) { _, newValue in
-                            Task {
-                                if newValue {
-                                    switch await openImmersiveSpace(id: "ImmersiveSpace") {
-                                    case .opened:
-                                        immersiveSpaceIsShown = true
-                                    case .error, .userCancelled:
-                                        fallthrough
-                                    @unknown default:
-                                        immersiveSpaceIsShown = false
-                                        showImmersiveSpace = false
-                                    }
-                                } else if immersiveSpaceIsShown {
-                                    await dismissImmersiveSpace()
-                                    immersiveSpaceIsShown = false
-                                }
-                            }
+                            Button("AR View", action: {
+                                openWindow(id: "AR_View")
+                            })
                         }
                         Spacer()
                         ScrollView {
