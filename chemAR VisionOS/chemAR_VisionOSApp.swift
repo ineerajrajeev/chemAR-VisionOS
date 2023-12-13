@@ -19,6 +19,5 @@ struct chemAR_VisionOSApp: App {
             ARViewContainer(info: mockData)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1000, height: 1000, depth: 1000)
     }
 }

@@ -16,7 +16,7 @@ struct ARViewContainer: View {
                 nucleus.scale = [0.25, 0.25, 0.25]
 
                 for (shellIndex, electronCount) in info.shells.enumerated() {
-                    let electronRadius = CGFloat(shellIndex + 1) * 0.1
+                    let electronRadius = CGFloat(shellIndex + 1) * 0.05
                     
                     
                     for i in 0..<electronCount {
