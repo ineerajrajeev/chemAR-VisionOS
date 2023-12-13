@@ -9,15 +9,20 @@ import SwiftUI
 
 @main
 struct chemAR_VisionOSApp: App {
+    
+    @State private var model = ViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(model)
         }
         .windowStyle(.plain)
         
         WindowGroup(id: "AR_View") {
-            ARViewContainer(info: mockData)
+            ARViewContainer()
+                .environment(model)
         }
         .windowStyle(.volumetric)
+        .defaultSize(width: 1500, height: 200)
     }
 }

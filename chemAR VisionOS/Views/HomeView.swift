@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(ViewModel.self) private var model
     @Environment(\.colorScheme) var colorScheme
     
     @Environment(\.openWindow) var openWindow
@@ -20,6 +21,7 @@ struct HomeView: View {
 
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+
     
     let info = getRandomElement(from: elements)!
     
@@ -36,6 +38,7 @@ struct HomeView: View {
                             Button("AR View", action: {
                                 if !showWindow {
                                     openWindow(id: "AR_View")
+                                    model.element = info
                                     showWindow = true
                                 } else {
                                     dismissWindow(id: "AR_View")

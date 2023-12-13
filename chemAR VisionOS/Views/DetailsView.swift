@@ -33,7 +33,7 @@ struct Details: View {
                         
                         // Link to AR View
                         NavigationLink(
-                            destination: ARViewContainer(info: info),
+                            destination: ARViewContainer(),
                             label: {
                                 Label("AR View", systemImage: "rotate.3d.fill")
                                     .clipShape(Capsule())

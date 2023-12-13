@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E45085762B26E8A80066D498 /* ARElementDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45085752B26E8A80066D498 /* ARElementDetails.swift */; };
+		E457A2F92B29CA4A008A5946 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E457A2F82B29CA4A008A5946 /* ViewModel.swift */; };
+		E457A2FB2B29E6FB008A5946 /* SunLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E457A2FA2B29E6FB008A5946 /* SunLight.swift */; };
 		E462473B2B26CD6B00A52C22 /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462473A2B26CD6A00A52C22 /* ARViewContainer.swift */; };
 		E490496F2B25666A00B9A946 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = E490496E2B25666A00B9A946 /* RealityKitContent */; };
 		E49049712B25666A00B9A946 /* chemAR_VisionOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49049702B25666A00B9A946 /* chemAR_VisionOSApp.swift */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		E45085752B26E8A80066D498 /* ARElementDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARElementDetails.swift; sourceTree = "<group>"; };
+		E457A2F82B29CA4A008A5946 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		E457A2FA2B29E6FB008A5946 /* SunLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunLight.swift; sourceTree = "<group>"; };
 		E462473A2B26CD6A00A52C22 /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
 		E49049692B25666A00B9A946 /* chemAR VisionOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chemAR VisionOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E490496D2B25666A00B9A946 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 				E4A073E42B259C5200A97D2A /* filterData.swift */,
 				E4A073E32B259C5200A97D2A /* randomElement.swift */,
 				E4A073FC2B25ABCF00A97D2A /* questionGenerator.swift */,
+				E457A2F82B29CA4A008A5946 /* ViewModel.swift */,
+				E457A2FA2B29E6FB008A5946 /* SunLight.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -227,7 +233,9 @@
 				E4A073F92B25AB1C00A97D2A /* ListItem.swift in Sources */,
 				E4A073EC2B259C7000A97D2A /* AtomView.swift in Sources */,
 				E4A073FF2B25ABD700A97D2A /* quizQuestions.swift in Sources */,
+				E457A2F92B29CA4A008A5946 /* ViewModel.swift in Sources */,
 				E4A073FB2B25ABAA00A97D2A /* HomeView.swift in Sources */,
+				E457A2FB2B29E6FB008A5946 /* SunLight.swift in Sources */,
 				E45085762B26E8A80066D498 /* ARElementDetails.swift in Sources */,
 				E4A073F52B25A9F400A97D2A /* DetailsView.swift in Sources */,
 				E4A073F32B25A7C200A97D2A /* itemDetails.swift in Sources */,

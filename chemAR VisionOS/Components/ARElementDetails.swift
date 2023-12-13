@@ -8,6 +8,8 @@ import SwiftUI
 
 struct ARElementDetails: View {
     
+    @Environment(ViewModel.self) private var model
+    
     @State private var info: ElementInfo
     
     @State private var orbitOn = false
@@ -22,12 +24,11 @@ struct ARElementDetails: View {
     }
     
     func lightButton() {
-        print(lightOn)
-        lightOn = !lightOn
+        model.lightOn = !model.lightOn
     }
     
     func orbitButton() {
-        orbitOn = !orbitOn
+        model.orbitOn = !model.orbitOn
     }
 
     var body: some View {
