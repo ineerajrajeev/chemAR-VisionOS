@@ -7,7 +7,7 @@
 
 def Xform "Root"
 {
-    reorder nameChildren = ["GridMaterial", "Nucleus", "Nucleus", "ScratchedMetallicPaint"]
+    reorder nameChildren = ["GridMaterial", "Nucleus", "ScratchedMetallicPaint"]
     rel material:binding = None (
         bindMaterialAs = "weakerThanDescendants"
     )
@@ -32,7 +32,7 @@ def Xform "Root"
         )
         double radius = 0.1
         quatf xformOp:orient = (1, 0, 0, 0)
-        float3 xformOp:scale = (0.25, 0.25, 0.25)
+        float3 xformOp:scale = (0.5, 0.5, 0.5)
         float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -138,15 +138,6 @@ def Xform "Root"
                 float2 ui:nodegraph:node:size = (158.5, 235)
             }
         }
-    }
-
-    def "Electron" (
-        active = true
-        prepend references = @Electron.usdz@
-    )
-    {
-        float3 xformOp:scale = (0.25, 0.25, 0.25)
-        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
 

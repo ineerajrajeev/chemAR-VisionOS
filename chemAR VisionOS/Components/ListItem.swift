@@ -5,6 +5,7 @@
 //  Created by Neeraj Shetkar on 07/12/23.
 //
 
+// List item to be shown in blocks component
 import SwiftUI
 
 struct ListItem: View {

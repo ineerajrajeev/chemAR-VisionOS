@@ -33,7 +33,3 @@ struct itemDetails: View {
         }
     }
 }
-
-#Preview {
-    itemDetails(param1: "Atomic Weight", val1: "1.001", param2: "Density", val2: "1.002")
-}

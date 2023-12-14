@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Define blocks in Directory
 enum Blocks: String, CaseIterable {
     case all = "*"
     case s = "s"
@@ -16,10 +17,11 @@ enum Blocks: String, CaseIterable {
 }
 
 struct BlockView: View {
-    @State private var searchTerm = ""
-    @State private var selectedBlock: Blocks = .s
+    @State private var searchTerm = "" // Search term
+    @State private var selectedBlock: Blocks = .s // Selected block from picker
 
     var filteredElements: [String: ElementInfo] {
+        // Show all elements if block is set to "all"
         if selectedBlock == .all {
             guard !searchTerm.isEmpty else { return elements }
             return elements.filter {
@@ -28,10 +30,11 @@ struct BlockView: View {
                 String($0.value.number).localizedCaseInsensitiveContains(searchTerm)
             }
         } else {
+            // Filter elements from a particular block
             let blockElements = Dictionary(uniqueKeysWithValues:
                 elements.filter { filterElementsByBlock(block: selectedBlock.rawValue).keys.contains($0.key) }
             )
-            guard !searchTerm.isEmpty else { return blockElements }
+            guard !searchTerm.isEmpty else { return blockElements } // ALl elements in particular block if search block is empty
             return blockElements.filter {
                 $0.value.name.localizedCaseInsensitiveContains(searchTerm) ||
                 $0.value.symbol.localizedCaseInsensitiveContains(searchTerm)
@@ -41,7 +44,7 @@ struct BlockView: View {
     
     var sortedElements: [ElementInfo] {
         filteredElements.values.sorted { $0.number < $1.number }
-    }
+    } // Sort elements
 
     var body: some View {
         VStack {
@@ -50,10 +53,13 @@ struct BlockView: View {
                     .font(.title)
                     .fontWeight(.bold)
                 Spacer()
+                // Block title
             }
             .padding()
-            SearchBar(searchTerm: $searchTerm)
             
+            SearchBar(searchTerm: $searchTerm) // Search bar
+            
+            // Picker element containing list of all blocks
             Picker(selection: $selectedBlock, label: Text("Block")) {
                 ForEach(Blocks.allCases, id: \.self) {
                     Text("\($0.rawValue.uppercased()) Block")
@@ -62,6 +68,7 @@ struct BlockView: View {
             .pickerStyle(.segmented)
             .padding()
             
+            // List of all sorted elements
             List(sortedElements, id: \.name) { element in
                 NavigationLink(destination: Details(info: element)) {
                     ListItem(info: element)
@@ -79,6 +86,7 @@ struct BlockView: View {
         .padding(10)
     }
     
+    // Select color for a list item in given block
     func blockColor(_ block: String) -> Color {
         switch block {
         case "s": return Color("sblock_background")
@@ -93,6 +101,7 @@ struct BlockView: View {
 struct SearchBar: View {
     @Binding var searchTerm: String
     
+    // Seaarch bar component
     var body: some View {
         HStack {
             TextField("Search element", text: $searchTerm)
@@ -103,10 +112,3 @@ struct SearchBar: View {
         }
     }
 }
-
-struct BlockView_Previews: PreviewProvider {
-    static var previews: some View {
-        BlockView()
-    }
-}
-
