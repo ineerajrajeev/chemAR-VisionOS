@@ -4,6 +4,7 @@ import RealityKitContent
 
 struct ARViewContainer: View {
     @State private var electronRotations: [Double] = []
+    @State private var electronEntities: [Entity] = []
     @Environment(ViewModel.self) private var model
     
     let animationTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
@@ -19,29 +20,39 @@ struct ARViewContainer: View {
                     nucleus.setSunlight(intensity: 0.1)
 
                     for (shellIndex, electronCount) in model.element.shells.enumerated() {
-                        let electronRadius = CGFloat(shellIndex + 1) * 0.05
+                        let electronRadius = Float(shellIndex + 1) * 0.05
                         
                         for i in 0..<electronCount {
-                            let angle = 360.0 / Double(electronCount) * Double(i)
-                            let electron = try? await Entity(named: "Electron", in: realityKitContentBundle)
+                            let angle = 360.0 / Float(electronCount) * Float(i)
                             let x = electronRadius * cos(angle * .pi / 180)
                             let z = electronRadius * sin(angle * .pi / 180)
-                            electron?.setSunlight(intensity: 0.1)
+                            let electron = try? await Entity(named: "Electron", in: realityKitContentBundle)
                             if let electronEntity = electron {
                                 content.add(electronEntity)
-                                electronEntity.position = [Float(x), 0, Float(z)] // Adjust as needed
+                                electronEntity.position = [x, 0, z]
                                 electronEntity.scale = [0.1, 0.1, 0.1]
-                                electronRotations.append(0.0)
+                                
+                                let duration: Double = .infinity
+
+                                // Orbit around the nucleus
+                                let orbit = OrbitAnimation(
+                                    name: "Electron_Orbit_\(shellIndex)_\(i)",
+                                    duration: calculateRotationDuration(for: shellIndex),
+                                    axis: [0, 1, 0],
+                                    startTransform: electronEntity.transform,
+                                    bindTarget: .transform,
+                                    repeatMode: .repeat
+                                )
+                                let animation = try? AnimationResource.generate(with: orbit)
+                                electronEntity.playAnimation(animation!)
+                                electronEntities.append(electronEntity)
                             }
                         }
                     }
                 }
             }
-            .onAppear {
-                setupRotations()
-            }
             .onReceive(animationTimer) { _ in
-                animateRotations()
+                updateElectronPositions()
             }
         }
     }
@@ -49,11 +60,23 @@ struct ARViewContainer: View {
     private func setupRotations() {
         electronRotations = Array(repeating: 0.0, count: model.element.shells.reduce(0, +))
     }
+    
+    private func calculateRotationDuration(for shellIndex: Int) -> Double {
+            let baseDuration = 10.0
+            let durationFactor = 0.5
+            let duration = baseDuration / (1.0 + durationFactor * Double(shellIndex))
+            return duration
+        }
 
-    private func animateRotations() {
-        for i in 0..<electronRotations.count {
-            electronRotations[i] += 2.0 // Adjust the rotation speed here
-            // Update the rotation or transform of each electron entity here based on 'electronRotations[i]'
+    private func updateElectronPositions() {
+        for (index, electronEntity) in electronEntities.enumerated() {
+            let shellIndex = index % model.element.shells.count
+            let electronCount = model.element.shells[shellIndex]
+            let angle = 360.0 / Double(electronCount) * Double(index)
+            let electronRadius = Float(shellIndex + 1) * 0.05
+            let x = electronRadius * cos(Float(angle) * .pi / 180)
+            let z = electronRadius * sin(Float(angle) * .pi / 180)
+            electronEntity.position = [x, 0, z]
         }
     }
 }
