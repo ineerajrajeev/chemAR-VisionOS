@@ -23,6 +23,6 @@ struct chemAR_VisionOSApp: App {
                 .environment(model)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1500, height: 200)
+        .defaultSize(width: 1500, height: 100)
     }
 }

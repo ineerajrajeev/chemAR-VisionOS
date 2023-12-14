@@ -9,7 +9,12 @@ import SwiftUI
 
 struct Details: View {
     
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(ViewModel.self) private var model
+    // Show/ Dismiss window
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.dismissWindow) var dismissWindow
+
+    
     let info: ElementInfo
 
     var body: some View {
@@ -32,13 +37,23 @@ struct Details: View {
                         Spacer()
                         
                         // Link to AR View
-                        NavigationLink(
-                            destination: ARViewContainer(),
-                            label: {
-                                Label("AR View", systemImage: "rotate.3d.fill")
-                                    .clipShape(Capsule())
+                        Button("AR View", action: {
+                            if !model.showWindow {
+                                openWindow(id: "AR_View")
+                                model.element = info
+                                model.showWindow = true
+                            } else {
+                                if info.number == model.element.number {
+                                    model.showWindow = false
+                                    dismissWindow(id: "AR_View")
+                                } else {
+                                    dismissWindow(id: "AR_View")
+                                    model.element = info
+                                    openWindow(id: "AR_View")
+                                }
                             }
-                        )
+                            
+                        })
                     }
                     Spacer()
                     

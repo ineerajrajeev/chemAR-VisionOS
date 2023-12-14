@@ -1,10 +1,10 @@
 import Foundation
 
-@Observable
-class ViewModel
+class ViewModel: Observable
 {
     var navigationPath : [ElementInfo] = []
     var lightOn : Bool = false
     var element : ElementInfo = mockData
-    var orbitOn: Bool = false
+    @Published var orbitOn: Bool = false
+    var showWindow: Bool = false
 }
