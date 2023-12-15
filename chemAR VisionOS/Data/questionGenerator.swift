@@ -15,7 +15,8 @@ func questionGenerator() -> (question: String, correctAnswer: String, options: [
         "block": "Which block does \(someElement.name) belong?",
         "atomicweight": "What is an atomic weight of \(someElement.name)?",
         "period": "Which period does \(someElement.name) belong to?",
-        "symbol": "Which of the following is the symbol of \(someElement.name)?"
+        "symbol": "Which of the following is the symbol of \(someElement.name)?",
+        "electrons": "How many electrons are there in \(someElement.name)?"
     ]
     
     let key: String = questions.keys.randomElement() ?? "symbol"
@@ -24,7 +25,7 @@ func questionGenerator() -> (question: String, correctAnswer: String, options: [
     var optionsForQuiz: [String] = []
     var correctAnswer: String = ""
     
-    if key == "number" {
+    if key == "number" || key == "electrons" {
         correctAnswer = "\(someElement.number)"
         optionsForQuiz.append("\(someElement.number)")
         while optionsForQuiz.count < 4 {

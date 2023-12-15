@@ -17,6 +17,7 @@ struct chemAR_VisionOSApp: App {
                 .environment(model)
         }
         .windowStyle(.plain)
+        .defaultSize(width: 1500, height: 1150)
         
         WindowGroup(id: "AR_View") {
             ARViewContainer()
